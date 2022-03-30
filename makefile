@@ -19,11 +19,11 @@ coverage: run
 run:
 	./onecov/onecov
 	./twocov/twocov
-	mkdir combined
+	mkdir -p combined
 	cp twocov/*.gcda twocov/*.gcno onecov/*.gcno onecov/*.gcda combined/
 	lcov --directory combined --capture --output-file fullcov.info
 	lcov  -a fullcov.info -o alpha.info
 
 clean:
-	rm -rf onecov twocov fullcov
+	rm -rf onecov twocov fullcov combined
 
