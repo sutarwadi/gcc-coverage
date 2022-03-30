@@ -1,8 +1,8 @@
-all: onecov/onecov twocov/twocov fullcov/fullcov
+all: twocov/onecov twocov/twocov fullcov/fullcov
 
-onecov/onecov: src/main.cpp src/world.hpp
-	mkdir -p onecov
-	g++ src/main.cpp src/world.cpp -o onecov/onecov --coverage -DONECOV -O0 -fno-inline -fno-inline-small-functions -fno-default-inline
+twocov/onecov: src/main.cpp src/world.hpp
+	mkdir -p twocov
+	g++ src/main.cpp src/world.cpp -o twocov/onecov --coverage -DONECOV -O0 -fno-inline -fno-inline-small-functions -fno-default-inline
 
 twocov/twocov: src/main.cpp src/world.hpp
 	mkdir -p twocov
@@ -17,7 +17,7 @@ coverage: run
 .PHONY: run
 
 run:
-	./onecov/onecov
+	./twocov/onecov
 	./twocov/twocov
 	lcov --directory twocov --capture --output-file twocov.info
 	lcov  -a twocov.info -o alpha.info
