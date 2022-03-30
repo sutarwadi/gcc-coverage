@@ -14,6 +14,8 @@ fullcov/fullcov: src/main.cpp src/world.hpp
 
 coverage: run
 
+.PHONY: run
+
 run:
 	./onecov/onecov
 	./twocov/twocov
