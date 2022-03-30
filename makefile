@@ -1,13 +1,25 @@
-all: basic halfcov fullcov
+all: onecov/onecov twocov/twocov fullcov/fullcov
 
-basic: main.cpp world.hpp
-	g++ main.cpp -o basic
+onecov/onecov: src/main.cpp src/world.hpp
+	mkdir -p onecov
+	g++ src/main.cpp src/world.cpp -o onecov/onecov --coverage -DONECOV -O0 -fno-inline -fno-inline-small-functions -fno-default-inline
 
-halfcov: main.cpp world.hpp
-	g++ main.cpp -o halfcov
+twocov/twocov: src/main.cpp src/world.hpp
+	mkdir -p twocov
+	g++ src/main.cpp src/world.cpp -o twocov/twocov --coverage -DTWOCOV -O0 -fno-inline -fno-inline-small-functions -fno-default-inline
 
-fullcov: main.cpp world.hpp
-	g++ main.cpp -o fullcov -DFULLCOV
+fullcov/fullcov: src/main.cpp src/world.hpp
+	mkdir -p fullcov
+	g++ src/main.cpp src/world.cpp -o fullcov/fullcov -DONECOV -DTWOCOV --coverage -O0 -fno-inline -fno-inline-small-functions -fno-default-inline
 
-clean: basic halfcov fullcov
-	rm basic halfcov fullcov
+coverage: run
+
+run:
+	./onecov/onecov
+	./twocov/twocov
+	lcov --directory twocov --capture --output-file twocov.info
+	lcov  -a twocov.info -o alpha.info
+
+clean:
+	rm -rf onecov twocov fullcov
+
