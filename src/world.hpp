@@ -5,10 +5,6 @@
 
 double g(double f);
 
-template<typename T>
-void f(T c)
-{
-  std::cout << "The integer number is :" << c << "\n";
-}
-
+void f(int c);
+void f(double c);
 #endif // WORLD_HPP
